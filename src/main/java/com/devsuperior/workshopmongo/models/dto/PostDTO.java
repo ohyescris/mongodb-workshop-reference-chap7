@@ -1,19 +1,15 @@
-package com.devsuperior.workshopmongo.models.entities;
+package com.devsuperior.workshopmongo.models.dto;
 
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
-
 import com.devsuperior.workshopmongo.models.embedded.Author;
 import com.devsuperior.workshopmongo.models.embedded.Comment;
+import com.devsuperior.workshopmongo.models.entities.Post;
 
-@Document(collection = "posts")
-public class Post {
+public class PostDTO {
 
-	@Id
 	private String id;
 	private Instant moment;
 	private String title;
@@ -23,15 +19,24 @@ public class Post {
 
 	private List<Comment> comments = new ArrayList<>();
 
-	public Post() {
+	public PostDTO() {
 	}
 
-	public Post(String id, Instant moment, String title, String body, Author author) {
+	public PostDTO(String id, Instant moment, String title, String body, Author author) {
 		this.id = id;
 		this.moment = moment;
 		this.title = title;
 		this.body = body;
 		this.author = author;
+	}
+
+	public PostDTO(Post entity) {
+		this.id = entity.getId();
+		this.moment = entity.getMoment();
+		this.title = entity.getTitle();
+		this.body = entity.getBody();
+		this.author = entity.getAuthor();
+		this.comments.addAll(entity.getComments());
 	}
 
 	public String getId() {
